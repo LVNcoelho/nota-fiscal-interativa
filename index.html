@@ -1,118 +1,75 @@
 <!DOCTYPE html>
-<html lang="pt-PT">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Planilha de Vendas - Buriti Brasa</title>
+    <title>Planilha de Vendas - T 7 Carnes</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        /* Estilos específicos de impressão para gerar o documento limpo */
+        body { font-family: 'Inter', sans-serif; }
         @media print {
-            body {
-                background-color: #fff;
-                color: #000;
-            }
-            .no-print {
-                display: none !important;
-            }
-            .print-shadow {
-                box-shadow: none !important;
-                border: none !important;
-            }
-            .print-border {
-                border: 1px solid #000 !important;
-            }
+            .no-print { display: none !important; }
+            .print-shadow { box-shadow: none !important; border: none !important; }
+            .print-border { border: 1px solid #000 !important; }
         }
     </style>
 </head>
-<body class="bg-slate-100 min-h-screen text-slate-800 flex flex-col">
+<body class="bg-slate-100 min-h-screen text-slate-800">
 
-    <header class="bg-indigo-900 text-white shadow-md no-print">
-        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
-            <div class="flex items-center gap-3">
-                <div class="bg-amber-500 p-2 rounded-lg text-indigo-950 font-bold text-xl">BB</div>
-                <div>
-                    <h1 class="font-bold text-lg leading-tight">Buriti Brasa</h1>
-                    <p class="text-xs text-indigo-200">Gerador Interativo de Notas e Planilhas</p>
-                </div>
-            </div>
+    <main class="max-w-5xl w-full mx-auto p-4 my-4">
+        <div class="bg-white rounded-xl shadow-md border border-slate-200 p-8 print-border">
             
-            <div class="flex flex-wrap gap-2">
-                <button onclick="adicionarLinha()" class="bg-indigo-700 hover:bg-indigo-600 px-4 py-2 rounded-lg text-sm font-semibold transition-all flex items-center gap-1.5">
-                    Adicionar Linha
-                </button>
-                <button onclick="exportarCSV()" class="bg-emerald-600 hover:bg-emerald-500 px-4 py-2 rounded-lg text-sm font-semibold transition-all flex items-center gap-1.5">
-                    Exportar Excel/CSV
-                </button>
-                <button onclick="window.print()" class="bg-amber-500 hover:bg-amber-400 text-indigo-950 px-4 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-1.5">
-                    Imprimir Nota
-                </button>
+            <!-- CABEÇALHO DO EMISSOR -->
+            <div class="border-b-2 border-slate-200 pb-6 mb-6 text-center">
+                <input type="text" value="T 7 COMÉRCIO DE CARNES LTDA" class="text-2xl font-extrabold text-slate-900 text-center w-full focus:outline-none">
+                <input type="text" value="MERCADAO N 1" class="text-sm font-semibold text-amber-600 text-center w-full focus:outline-none uppercase mt-1">
             </div>
-        </div>
-    </header>
 
-    <main class="flex-grow max-w-5xl w-full mx-auto p-4 sm:p-6 my-4">
-        <div class="bg-white rounded-xl shadow-md border border-slate-200 p-6 sm:p-8 print-shadow print-border">
-            
-            <div class="border-b-2 border-slate-200 pb-6 mb-6">
-                <div class="text-center">
-                    <input type="text" value="Buriti Brasa" class="text-2xl sm:text-3xl font-extrabold text-slate-900 text-center w-full focus:outline-none">
-                    <input type="text" value="Distribuidora comercial variedades" class="text-sm font-semibold text-amber-600 text-center w-full focus:outline-none uppercase mt-1">
+            <!-- METADADOS -->
+            <div class="bg-slate-50 p-4 rounded-lg mb-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="space-y-2">
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs font-bold text-slate-500 w-20 uppercase">Cliente:</span>
+                        <input type="text" placeholder="Nome do Cliente" class="text-sm font-semibold text-slate-800 w-full bg-transparent focus:outline-none">
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs font-bold text-slate-500 w-20 uppercase">Endereço:</span>
+                        <input type="text" value="RUA XI, 44 FONTE BOA - CASTANHAL" class="text-sm text-slate-700 w-full bg-transparent focus:outline-none">
+                    </div>
+                </div>
+                <div class="flex items-center justify-end">
+                    <span class="text-xs font-bold text-slate-500 uppercase mr-2">Data:</span>
+                    <input type="text" value="28/05/2026" class="text-sm font-mono font-bold text-slate-800 w-28 bg-transparent focus:outline-none">
                 </div>
             </div>
 
-            <div class="bg-slate-50 p-4 rounded-lg border border-slate-100 mb-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="md:col-span-2 space-y-2">
-                    <div class="flex items-center gap-2">
-                        <span class="text-xs font-bold text-slate-500 w-16 uppercase">Cliente:</span>
-                        <input type="text" value="Mercadão nº 1" class="text-sm font-semibold text-slate-800 w-full bg-transparent focus:outline-none">
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <span class="text-xs font-bold text-slate-500 w-16 uppercase">Endereço:</span>
-                        <input type="text" value="Fonte Boa - Castanhal" class="text-sm text-slate-700 w-full bg-transparent focus:outline-none">
-                    </div>
-                </div>
-                <div class="flex flex-col justify-center md:items-end">
-                    <div class="flex items-center gap-2">
-                        <span class="text-xs font-bold text-slate-500 uppercase">Data:</span>
-                        <input type="text" value="28/05/2026" class="text-sm font-mono font-bold text-slate-800 w-28 text-center bg-transparent focus:outline-none">
-                    </div>
-                </div>
-            </div>
-
-            <div class="overflow-x-auto border border-slate-300 rounded-lg">
-                <table class="w-full text-left border-collapse" id="tabela-itens">
-                    <thead>
-                        <tr class="bg-slate-800 text-white text-xs uppercase font-mono tracking-wider">
-                            <th class="py-3 px-4 text-center w-24">Quant.</th>
-                            <th class="py-3 px-4">Discriminação do Produto</th>
-                            <th class="py-3 px-4 text-right w-36">P. Unitário (R$)</th>
-                            <th class="py-3 px-4 text-right w-36">Total (R$)</th>
-                            <th class="py-3 px-2 text-center w-12 no-print">Ação</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-slate-200 text-sm" id="corpo-tabela">
-                        <tr class="hover:bg-slate-50">
-                            <td class="p-2 text-center"><input type="number" value="1000" oninput="calcularLinha(this)" class="w-full text-center font-mono focus:outline-none"></td>
-                            <td class="p-2"><input type="text" value="Acendedor de carvão" class="w-full focus:outline-none font-medium"></td>
-                            <td class="p-2 text-right"><input type="number" step="0.01" value="0.75" oninput="calcularLinha(this)" class="w-full text-right font-mono focus:outline-none"></td>
-                            <td class="p-2 text-right font-mono font-semibold text-slate-900 total-linha">R$ 750,00</td>
-                            <td class="p-2 text-center no-print"><button onclick="removerLinha(this)" class="text-rose-600">Remover</button></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <!-- TABELA -->
+            <table class="w-full text-left border-collapse" id="tabela-itens">
+                <thead>
+                    <tr class="bg-slate-800 text-white text-xs uppercase font-mono">
+                        <th class="py-3 px-4 text-center w-24">Quant.</th>
+                        <th class="py-3 px-4">Discriminação</th>
+                        <th class="py-3 px-4 text-right">P. Unitário</th>
+                        <th class="py-3 px-4 text-right">Total</th>
+                        <th class="py-3 px-2 text-center no-print">Ação</th>
+                    </tr>
+                </thead>
+                <tbody id="corpo-tabela">
+                    <tr>
+                        <td class="p-2 text-center"><input type="number" value="1000" oninput="calcularLinha(this)" class="w-full text-center font-mono focus:outline-none"></td>
+                        <td class="p-2"><input type="text" value="Acendedor de carvão" class="w-full focus:outline-none"></td>
+                        <td class="p-2 text-right"><input type="number" step="0.01" value="0.75" oninput="calcularLinha(this)" class="w-full text-right font-mono focus:outline-none"></td>
+                        <td class="p-2 text-right font-mono total-linha">R$ 750,00</td>
+                        <td class="p-2 text-center no-print"><button onclick="removerLinha(this)" class="text-rose-600">X</button></td>
+                    </tr>
+                </tbody>
+            </table>
 
             <div class="mt-6 flex justify-end">
-                <div class="bg-indigo-950 text-white rounded-lg p-4 w-80">
-                    <div class="flex justify-between items-center pt-1">
-                        <span class="text-sm font-bold text-amber-400 uppercase">Total Geral</span>
-                        <span class="font-mono text-lg font-extrabold text-amber-300" id="total-geral">R$ 750,00</span>
-                    </div>
+                <div class="bg-indigo-950 text-white rounded-lg p-4 w-64 text-right">
+                    <span class="text-xs text-amber-400 font-bold uppercase">Total Geral</span>
+                    <div class="text-2xl font-extrabold text-amber-300" id="total-geral">R$ 750,00</div>
                 </div>
             </div>
         </div>
@@ -136,14 +93,7 @@
             });
             document.getElementById('total-geral').textContent = formatarMoeda(total);
         }
-        function adicionarLinha() {
-            const tbody = document.getElementById('corpo-tabela');
-            const row = document.createElement('tr');
-            row.innerHTML = `<td class="p-2 text-center"><input type="number" value="0" oninput="calcularLinha(this)" class="w-full text-center font-mono focus:outline-none"></td><td class="p-2"><input type="text" placeholder="Produto" class="w-full focus:outline-none"></td><td class="p-2 text-right"><input type="number" step="0.01" value="0.00" oninput="calcularLinha(this)" class="w-full text-right font-mono focus:outline-none"></td><td class="p-2 text-right total-linha">R$ 0,00</td><td class="p-2 text-center no-print"><button onclick="removerLinha(this)" class="text-rose-600">Remover</button></td>`;
-            tbody.appendChild(row);
-        }
         function removerLinha(btn) { btn.closest('tr').remove(); calcularGeral(); }
-        function exportarCSV() { alert("Funcionalidade de exportação pronta."); }
     </script>
 </body>
 </html>
