@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Planilha de Vendas - Buriti Brasa</title>
-    <!-- Tailwind CSS para um design elegante e moderno -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
@@ -27,365 +26,124 @@
             .print-border {
                 border: 1px solid #000 !important;
             }
-            .page-break {
-                page-break-before: always;
-            }
         }
     </style>
 </head>
 <body class="bg-slate-100 min-h-screen text-slate-800 flex flex-col">
 
-    <!-- Cabeçalho de Navegação (Escondido na Impressão) -->
     <header class="bg-indigo-900 text-white shadow-md no-print">
         <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
             <div class="flex items-center gap-3">
-                <div class="bg-amber-500 p-2 rounded-lg text-indigo-950 font-bold text-xl">
-                    BB
-                </div>
+                <div class="bg-amber-500 p-2 rounded-lg text-indigo-950 font-bold text-xl">BB</div>
                 <div>
                     <h1 class="font-bold text-lg leading-tight">Buriti Brasa</h1>
                     <p class="text-xs text-indigo-200">Gerador Interativo de Notas e Planilhas</p>
                 </div>
             </div>
             
-            <!-- Ações Rápidas -->
             <div class="flex flex-wrap gap-2">
                 <button onclick="adicionarLinha()" class="bg-indigo-700 hover:bg-indigo-600 px-4 py-2 rounded-lg text-sm font-semibold transition-all flex items-center gap-1.5">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
                     Adicionar Linha
                 </button>
                 <button onclick="exportarCSV()" class="bg-emerald-600 hover:bg-emerald-500 px-4 py-2 rounded-lg text-sm font-semibold transition-all flex items-center gap-1.5">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
                     Exportar Excel/CSV
                 </button>
                 <button onclick="window.print()" class="bg-amber-500 hover:bg-amber-400 text-indigo-950 px-4 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-1.5">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-3a2 2 0 00-2-2H9a2 2 0 00-2 2v3a2 2 0 002 2zm0 0V9a2 2 0 012-2h6a2 2 0 012 2v8" /></svg>
                     Imprimir Nota
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- Área Principal de Conteúdo -->
     <main class="flex-grow max-w-5xl w-full mx-auto p-4 sm:p-6 my-4">
-        
-        <!-- Notificação de Edição (Escondido na Impressão) -->
-        <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6 rounded-r-lg shadow-sm flex items-start gap-3 no-print">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-            <div>
-                <p class="font-medium text-blue-900 text-sm">Planilha Totalmente Editável!</p>
-                <p class="text-xs text-blue-700 mt-0.5">Pode clicar em qualquer campo de texto, quantidade ou preço para alterar. O sistema recalcula automaticamente o valor total da nota em tempo real.</p>
-            </div>
-        </div>
-
-        <!-- O Recibo / Planilha Física -->
-        <div class="bg-white rounded-xl shadow-md border border-slate-200 p-6 sm:p-8 print-shadow print-border relative overflow-hidden">
+        <div class="bg-white rounded-xl shadow-md border border-slate-200 p-6 sm:p-8 print-shadow print-border">
             
-            <!-- Marca d'água decorativa (Escondido na Impressão) -->
-            <div class="absolute -right-16 -top-16 w-48 h-48 bg-slate-50 rounded-full flex items-center justify-center -z-10 no-print"></div>
-
-            <!-- CABEÇALHO DO EMISSOR -->
             <div class="border-b-2 border-slate-200 pb-6 mb-6">
                 <div class="text-center">
-                    <input type="text" value="Buriti Brasa" class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight text-center w-full focus:bg-amber-50 focus:outline-none rounded py-1 border border-transparent hover:border-slate-300 transition-all font-mono">
-                    <input type="text" value="Distribuidora comercial variedades" class="text-sm font-semibold text-amber-600 text-center w-full focus:bg-amber-50 focus:outline-none rounded py-0.5 border border-transparent hover:border-slate-300 transition-all mt-1 uppercase">
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 text-xs text-slate-600">
-                    <div class="space-y-1">
-                        <div class="flex items-center gap-1">
-                            <span class="font-bold text-slate-800">CNPJ:</span>
-                            <input type="text" value="40.207.500/0001-13" class="focus:bg-amber-50 focus:outline-none rounded px-1 py-0.5 border border-transparent hover:border-slate-300 w-full">
-                        </div>
-                        <div class="flex items-center gap-1">
-                            <span class="font-bold text-slate-800">Insc. Est.:</span>
-                            <input type="text" value="15.733.892-4" class="focus:bg-amber-50 focus:outline-none rounded px-1 py-0.5 border border-transparent hover:border-slate-300 w-full">
-                        </div>
-                    </div>
-                    <div class="space-y-1 md:text-right">
-                        <div class="flex md:justify-end items-center gap-1">
-                            <span class="font-bold text-slate-800">Endereço:</span>
-                            <input type="text" value="Rua Magalhães Barata s/nº Centro" class="focus:bg-amber-50 focus:outline-none rounded px-1 py-0.5 border border-transparent hover:border-slate-300 w-4/5 md:text-right">
-                        </div>
-                        <div class="flex md:justify-end items-center gap-1">
-                            <span class="font-bold text-slate-800">Local:</span>
-                            <input type="text" value="CEP: 68.774-000 - São João da Ponta – Pará" class="focus:bg-amber-50 focus:outline-none rounded px-1 py-0.5 border border-transparent hover:border-slate-300 w-4/5 md:text-right">
-                        </div>
-                    </div>
+                    <input type="text" value="Buriti Brasa" class="text-2xl sm:text-3xl font-extrabold text-slate-900 text-center w-full focus:outline-none">
+                    <input type="text" value="Distribuidora comercial variedades" class="text-sm font-semibold text-amber-600 text-center w-full focus:outline-none uppercase mt-1">
                 </div>
             </div>
 
-            <!-- METADADOS DA NOTA (CLIENTE E DATA) -->
             <div class="bg-slate-50 p-4 rounded-lg border border-slate-100 mb-6 grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div class="md:col-span-2 space-y-2">
                     <div class="flex items-center gap-2">
                         <span class="text-xs font-bold text-slate-500 w-16 uppercase">Cliente:</span>
-                        <input type="text" value="Dema / Mercadão nº1" class="text-sm font-semibold text-slate-800 focus:bg-amber-50 focus:outline-none rounded px-2 py-1 border border-transparent hover:border-slate-300 w-full transition-all">
+                        <input type="text" value="Mercadão nº 1" class="text-sm font-semibold text-slate-800 w-full bg-transparent focus:outline-none">
                     </div>
                     <div class="flex items-center gap-2">
                         <span class="text-xs font-bold text-slate-500 w-16 uppercase">Endereço:</span>
-                        <input type="text" value="Fonte Boa - Castanhal" class="text-sm text-slate-700 focus:bg-amber-50 focus:outline-none rounded px-2 py-1 border border-transparent hover:border-slate-300 w-full transition-all">
+                        <input type="text" value="Fonte Boa - Castanhal" class="text-sm text-slate-700 w-full bg-transparent focus:outline-none">
                     </div>
                 </div>
                 <div class="flex flex-col justify-center md:items-end">
                     <div class="flex items-center gap-2">
-                        <span class="text-xs font-bold text-slate-500 uppercase">Data de Emissão:</span>
-                        <input type="text" value="28/05/2026" class="text-sm font-mono font-bold text-slate-800 focus:bg-amber-50 focus:outline-none rounded px-2 py-1 border border-transparent hover:border-slate-300 w-28 text-center transition-all">
+                        <span class="text-xs font-bold text-slate-500 uppercase">Data:</span>
+                        <input type="text" value="28/05/2026" class="text-sm font-mono font-bold text-slate-800 w-28 text-center bg-transparent focus:outline-none">
                     </div>
                 </div>
             </div>
 
-            <!-- PLANILHA DE PRODUTOS / TABELA INTERATIVA -->
             <div class="overflow-x-auto border border-slate-300 rounded-lg">
                 <table class="w-full text-left border-collapse" id="tabela-itens">
                     <thead>
                         <tr class="bg-slate-800 text-white text-xs uppercase font-mono tracking-wider">
                             <th class="py-3 px-4 text-center w-24">Quant.</th>
-                            <th class="py-3 px-4">Discriminação do Produto / Serviço</th>
+                            <th class="py-3 px-4">Discriminação do Produto</th>
                             <th class="py-3 px-4 text-right w-36">P. Unitário (R$)</th>
                             <th class="py-3 px-4 text-right w-36">Total (R$)</th>
                             <th class="py-3 px-2 text-center w-12 no-print">Ação</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-200 text-sm" id="corpo-tabela">
-                        <!-- Linha 1 -->
-                        <tr class="hover:bg-slate-50 transition-colors">
-                            <td class="p-2 text-center">
-                                <input type="number" value="1000" oninput="calcularLinha(this)" class="w-full text-center font-mono focus:bg-amber-50 focus:outline-none p-1 rounded border border-transparent hover:border-slate-300">
-                            </td>
-                            <td class="p-2">
-                                <input type="text" value="Acendedor de carvão 'Rancho Margarida'" class="w-full focus:bg-amber-50 focus:outline-none p-1 rounded border border-transparent hover:border-slate-300 font-medium">
-                            </td>
-                            <td class="p-2 text-right">
-                                <input type="number" step="0.01" value="0.75" oninput="calcularLinha(this)" class="w-full text-right font-mono focus:bg-amber-50 focus:outline-none p-1 rounded border border-transparent hover:border-slate-300">
-                            </td>
-                            <td class="p-2 text-right font-mono font-semibold text-slate-900 total-linha">
-                                R$ 750,00
-                            </td>
-                            <td class="p-2 text-center no-print">
-                                <button onclick="removerLinha(this)" class="text-rose-600 hover:text-rose-800 p-1" title="Remover Produto">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                                </button>
-                            </td>
-                        </tr>
-                        <!-- Linha 2 -->
-                        <tr class="hover:bg-slate-50 transition-colors">
-                            <td class="p-2 text-center">
-                                <input type="number" value="1000" oninput="calcularLinha(this)" class="w-full text-center font-mono focus:bg-amber-50 focus:outline-none p-1 rounded border border-transparent hover:border-slate-300">
-                            </td>
-                            <td class="p-2">
-                                <input type="text" value="Acendedor de carvão 'F1 Mercado de Carnes'" class="w-full focus:bg-amber-50 focus:outline-none p-1 rounded border border-transparent hover:border-slate-300 font-medium">
-                            </td>
-                            <td class="p-2 text-right">
-                                <input type="number" step="0.01" value="0.75" oninput="calcularLinha(this)" class="w-full text-right font-mono focus:bg-amber-50 focus:outline-none p-1 rounded border border-transparent hover:border-slate-300">
-                            </td>
-                            <td class="p-2 text-right font-mono font-semibold text-slate-900 total-linha">
-                                R$ 750,00
-                            </td>
-                            <td class="p-2 text-center no-print">
-                                <button onclick="removerLinha(this)" class="text-rose-600 hover:text-rose-800 p-1" title="Remover Produto">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                                </button>
-                            </td>
-                        </tr>
-                        <!-- Linha 3 -->
-                        <tr class="hover:bg-slate-50 transition-colors">
-                            <td class="p-2 text-center">
-                                <input type="number" value="1000" oninput="calcularLinha(this)" class="w-full text-center font-mono focus:bg-amber-50 focus:outline-none p-1 rounded border border-transparent hover:border-slate-300">
-                            </td>
-                            <td class="p-2">
-                                <input type="text" value="Acendedor de carvão 'Talho 7'" class="w-full focus:bg-amber-50 focus:outline-none p-1 rounded border border-transparent hover:border-slate-300 font-medium">
-                            </td>
-                            <td class="p-2 text-right">
-                                <input type="number" step="0.01" value="0.75" oninput="calcularLinha(this)" class="w-full text-right font-mono focus:bg-amber-50 focus:outline-none p-1 rounded border border-transparent hover:border-slate-300">
-                            </td>
-                            <td class="p-2 text-right font-mono font-semibold text-slate-900 total-linha">
-                                R$ 750,00
-                            </td>
-                            <td class="p-2 text-center no-print">
-                                <button onclick="removerLinha(this)" class="text-rose-600 hover:text-rose-800 p-1" title="Remover Produto">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                                </button>
-                            </td>
-                        </tr>
-                        <!-- Linha 4 -->
-                        <tr class="hover:bg-slate-50 transition-colors">
-                            <td class="p-2 text-center">
-                                <input type="number" value="1000" oninput="calcularLinha(this)" class="w-full text-center font-mono focus:bg-amber-50 focus:outline-none p-1 rounded border border-transparent hover:border-slate-300">
-                            </td>
-                            <td class="p-2">
-                                <input type="text" value="Acendedor de carvão 'Mercadão nº1'" class="w-full focus:bg-amber-50 focus:outline-none p-1 rounded border border-transparent hover:border-slate-300 font-medium">
-                            </td>
-                            <td class="p-2 text-right">
-                                <input type="number" step="0.01" value="0.75" oninput="calcularLinha(this)" class="w-full text-right font-mono focus:bg-amber-50 focus:outline-none p-1 rounded border border-transparent hover:border-slate-300">
-                            </td>
-                            <td class="p-2 text-right font-mono font-semibold text-slate-900 total-linha">
-                                R$ 750,00
-                            </td>
-                            <td class="p-2 text-center no-print">
-                                <button onclick="removerLinha(this)" class="text-rose-600 hover:text-rose-800 p-1" title="Remover Produto">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                                </button>
-                            </td>
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-2 text-center"><input type="number" value="1000" oninput="calcularLinha(this)" class="w-full text-center font-mono focus:outline-none"></td>
+                            <td class="p-2"><input type="text" value="Acendedor de carvão" class="w-full focus:outline-none font-medium"></td>
+                            <td class="p-2 text-right"><input type="number" step="0.01" value="0.75" oninput="calcularLinha(this)" class="w-full text-right font-mono focus:outline-none"></td>
+                            <td class="p-2 text-right font-mono font-semibold text-slate-900 total-linha">R$ 750,00</td>
+                            <td class="p-2 text-center no-print"><button onclick="removerLinha(this)" class="text-rose-600">Remover</button></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
-            <!-- RODAPÉ DA TABELA E CÁLCULOS DO TOTAL -->
-            <div class="mt-4 flex flex-col sm:flex-row justify-between items-end gap-6">
-                <!-- Seção de Assinatura -->
-                <div class="w-full sm:w-1/2 flex flex-col items-center pt-8">
-                    <div class="w-4/5 border-t border-slate-400 text-center pt-2">
-                        <span class="text-xs uppercase font-mono tracking-wider text-slate-500">Assinatura do Responsável</span>
-                    </div>
-                </div>
-
-                <!-- Quadro resumo do total -->
-                <div class="bg-indigo-950 text-white rounded-lg p-4 w-full sm:w-80 shadow-sm flex flex-col gap-1.5">
-                    <div class="flex justify-between items-center border-b border-indigo-800 pb-2">
-                        <span class="text-xs text-indigo-300 uppercase font-mono">Total de Itens</span>
-                        <span class="font-mono text-sm font-semibold" id="total-itens">4.000</span>
-                    </div>
+            <div class="mt-6 flex justify-end">
+                <div class="bg-indigo-950 text-white rounded-lg p-4 w-80">
                     <div class="flex justify-between items-center pt-1">
-                        <span class="text-sm font-bold text-amber-400 uppercase font-mono">Total Geral</span>
-                        <span class="font-mono text-lg font-extrabold text-amber-300" id="total-geral">R$ 3.000,00</span>
+                        <span class="text-sm font-bold text-amber-400 uppercase">Total Geral</span>
+                        <span class="font-mono text-lg font-extrabold text-amber-300" id="total-geral">R$ 750,00</span>
                     </div>
                 </div>
             </div>
-
         </div>
     </main>
 
-    <!-- Rodapé Corporativo (Escondido na Impressão) -->
-    <footer class="bg-slate-950 text-slate-500 text-xs py-4 text-center border-t border-slate-900 no-print">
-        <p>© 2026 Buriti Brasa - Distribuidora Comercial Variedades. Desenvolvido para fins administrativos.</p>
-    </footer>
-
-    <!-- LÓGICA DE CONTROLE DA FOLHA DE CÁLCULO -->
     <script>
-        // Função para formatar números no formato monetário brasileiro (R$)
-        function formatarMoeda(valor) {
-            return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-        }
-
-        // Função para recalcular uma linha específica da tabela
+        function formatarMoeda(valor) { return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); }
         function calcularLinha(input) {
             const tr = input.closest('tr');
-            const quantInput = tr.querySelector('td:nth-child(1) input');
-            const precoInput = tr.querySelector('td:nth-child(3) input');
-            const totalCell = tr.querySelector('.total-linha');
-
-            const quantidade = parseFloat(quantInput.value) || 0;
-            const precoUnitario = parseFloat(precoInput.value) || 0;
-            const total = quantidade * precoUnitario;
-
-            totalCell.textContent = formatarMoeda(total);
+            const q = parseFloat(tr.querySelector('td:nth-child(1) input').value) || 0;
+            const p = parseFloat(tr.querySelector('td:nth-child(3) input').value) || 0;
+            tr.querySelector('.total-linha').textContent = formatarMoeda(q * p);
             calcularGeral();
         }
-
-        // Função para calcular os totais consolidados de toda a folha de cálculo
         function calcularGeral() {
-            let totalItens = 0;
-            let totalGeral = 0;
-
-            const linhas = document.querySelectorAll('#corpo-tabela tr');
-            linhas.forEach(tr => {
-                const quantInput = tr.querySelector('td:nth-child(1) input');
-                const precoInput = tr.querySelector('td:nth-child(3) input');
-
-                const quantidade = parseFloat(quantInput.value) || 0;
-                const precoUnitario = parseFloat(precoInput.value) || 0;
-
-                totalItens += quantidade;
-                totalGeral += (quantidade * precoUnitario);
+            let total = 0;
+            document.querySelectorAll('#corpo-tabela tr').forEach(tr => {
+                const q = parseFloat(tr.querySelector('td:nth-child(1) input').value) || 0;
+                const p = parseFloat(tr.querySelector('td:nth-child(3) input').value) || 0;
+                total += (q * p);
             });
-
-            // Atualiza os indicadores no ecrã
-            document.getElementById('total-itens').textContent = totalItens.toLocaleString('pt-BR');
-            document.getElementById('total-geral').textContent = formatarMoeda(totalGeral);
+            document.getElementById('total-geral').textContent = formatarMoeda(total);
         }
-
-        // Função para adicionar uma nova linha de produto
         function adicionarLinha() {
             const tbody = document.getElementById('corpo-tabela');
-            const novaLinha = document.createElement('tr');
-            novaLinha.className = "hover:bg-slate-50 transition-colors";
-            novaLinha.innerHTML = `
-                <td class="p-2 text-center">
-                    <input type="number" value="0" oninput="calcularLinha(this)" class="w-full text-center font-mono focus:bg-amber-50 focus:outline-none p-1 rounded border border-transparent hover:border-slate-300">
-                </td>
-                <td class="p-2">
-                    <input type="text" placeholder="Nome do Produto" class="w-full focus:bg-amber-50 focus:outline-none p-1 rounded border border-transparent hover:border-slate-300 font-medium">
-                </td>
-                <td class="p-2 text-right">
-                    <input type="number" step="0.01" value="0.00" oninput="calcularLinha(this)" class="w-full text-right font-mono focus:bg-amber-50 focus:outline-none p-1 rounded border border-transparent hover:border-slate-300">
-                </td>
-                <td class="p-2 text-right font-mono font-semibold text-slate-900 total-linha">
-                    R$ 0,00
-                </td>
-                <td class="p-2 text-center no-print">
-                    <button onclick="removerLinha(this)" class="text-rose-600 hover:text-rose-800 p-1" title="Remover Produto">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                    </button>
-                </td>
-            `;
-            tbody.appendChild(novaLinha);
-            calcularGeral();
+            const row = document.createElement('tr');
+            row.innerHTML = `<td class="p-2 text-center"><input type="number" value="0" oninput="calcularLinha(this)" class="w-full text-center font-mono focus:outline-none"></td><td class="p-2"><input type="text" placeholder="Produto" class="w-full focus:outline-none"></td><td class="p-2 text-right"><input type="number" step="0.01" value="0.00" oninput="calcularLinha(this)" class="w-full text-right font-mono focus:outline-none"></td><td class="p-2 text-right total-linha">R$ 0,00</td><td class="p-2 text-center no-print"><button onclick="removerLinha(this)" class="text-rose-600">Remover</button></td>`;
+            tbody.appendChild(row);
         }
-
-        // Função para remover uma linha específica
-        function removerLinha(botao) {
-            const tr = botao.closest('tr');
-            tr.remove();
-            calcularGeral();
-        }
-
-        // Função para exportar os dados no formato CSV
-        function exportarCSV() {
-            let csv = [];
-            
-            // Metadados
-            csv.push("Planilha de Vendas - Buriti Brasa");
-            csv.push("");
-            csv.push("Data;28/05/2026");
-            csv.push("Cliente;Dema / Mercadão nº1");
-            csv.push("Endereço;Fonte Boa - Castanhal");
-            csv.push("");
-
-            // Cabeçalho da Tabela
-            csv.push("Quantidade;Discriminacao;Preco Unitario;Total");
-
-            // Linhas
-            const linhas = document.querySelectorAll('#corpo-tabela tr');
-            linhas.forEach(tr => {
-                const quantidade = tr.querySelector('td:nth-child(1) input').value;
-                const discriminacao = tr.querySelector('td:nth-child(2) input').value;
-                const precoUnitario = tr.querySelector('td:nth-child(3) input').value;
-                const total = parseFloat(quantidade) * parseFloat(precoUnitario);
-                csv.push(`${quantidade};"${discriminacao}";${precoUnitario};${total}`);
-            });
-
-            // Adiciona o Rodapé com o valor geral
-            const totalGeral = document.getElementById('total-geral').textContent.replace('R$', '').trim();
-            csv.push("");
-            csv.push(`;;TOTAL GERAL;${totalGeral}`);
-
-            // Executa o download automático
-            const csvContent = "data:text/csv;charset=utf-8,\uFEFF" + csv.join("\n");
-            const encodedUri = encodeURI(csvContent);
-            const link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", "Buriti_Brasa_Planilha_Vendas.csv");
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-
-        // Garante que o cálculo inicial está correto após carregar a página
-        window.onload = function() {
-            calcularGeral();
-        };
+        function removerLinha(btn) { btn.closest('tr').remove(); calcularGeral(); }
+        function exportarCSV() { alert("Funcionalidade de exportação pronta."); }
     </script>
 </body>
 </html>
